@@ -73,7 +73,7 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
           .symbol,
     );
 
-    final expenses = widget.budgetData.cap + widget.budgetData.totalExpenses;
+    final remaining = widget.budgetData.cap + widget.budgetData.totalExpenses;
     final categoryCap = widget.budgetData.cap;
     final categoryService = context.read<ICategoryService>();
     final value = -widget.budgetData.totalExpenses /
@@ -91,7 +91,11 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
       color = Colors.yellow;
     }
 
-    if (-expenses >= categoryCap) {
+    if (-widget.budgetData.totalExpenses == 0) {
+      print(widget.budgetData.totalExpenses);
+      colorExpenses = theme.colorScheme.secondary;
+      statusExpenses = 'remaining';
+    } else if (-widget.budgetData.totalExpenses >= categoryCap) {
       colorExpenses = theme.colorScheme.error;
       statusExpenses = 'exceeded';
     } else {
@@ -161,7 +165,7 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${formatter.format(expenses)} $statusExpenses",
+                  "${formatter.format(remaining)} $statusExpenses",
                   style: theme.textTheme.labelMedium
                       ?.copyWith(color: colorExpenses),
                 ),
