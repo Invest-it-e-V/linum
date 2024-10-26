@@ -73,11 +73,15 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
           .symbol,
     );
 
+    final expenses = widget.budgetData.cap + widget.budgetData.totalExpenses;
+    final categoryCap = widget.budgetData.cap;
     final categoryService = context.read<ICategoryService>();
     final value = -widget.budgetData.totalExpenses /
         (widget.budgetData.cap == 0 ? 1 : widget.budgetData.cap);
 
     var color = theme.colorScheme.primary;
+    Color? colorExpenses;
+    String statusExpenses;
 
     if (value >= 1) {
       color = theme.colorScheme.error;
@@ -87,7 +91,24 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
       color = Colors.yellow;
     }
 
+    if (-expenses >= categoryCap) {
+      colorExpenses = theme.colorScheme.error;
+      statusExpenses = 'exceeded';
+    } else {
+      colorExpenses = theme.colorScheme.primary;
+      statusExpenses = 'remaining';
+    }
+
     return Card.outlined(
+      shape: colorExpenses == theme.colorScheme.error
+          ? RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              side: BorderSide(
+                width: 1.5,
+                color: colorExpenses,
+              ),
+            )
+          : null,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -140,11 +161,12 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${formatter.format(widget.budgetData.cap + widget.budgetData.totalExpenses)} remaining",
-                  style: theme.textTheme.labelMedium,
+                  "${formatter.format(expenses)} $statusExpenses",
+                  style: theme.textTheme.labelMedium
+                      ?.copyWith(color: colorExpenses),
                 ),
                 Text(
-                  formatter.format(widget.budgetData.cap),
+                  formatter.format(categoryCap),
                   style: theme.textTheme.labelMedium,
                 ),
               ],
