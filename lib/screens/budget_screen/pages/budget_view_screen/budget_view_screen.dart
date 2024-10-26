@@ -14,13 +14,13 @@ class BudgetViewScreen extends StatelessWidget {
 
     return FutureBuilder(
       future: Future.wait([
-        viewModel.getBudgetViewData(DateTime.now()),
-        viewModel.getMainBudgetChartData(DateTime.now()),
+        viewModel.getBudgetViewData(DateTime.now()), // List<BudgetViewData>
+        viewModel.getMainBudgetChartData(DateTime.now()), // MainBudgetViewData,
       ]),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
-            itemCount: snapshot.requireData.length+1,
+            itemCount: (snapshot.requireData[0] as List<BudgetViewData>).length+1,
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) {
                 return Padding(

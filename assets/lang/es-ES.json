@@ -157,8 +157,12 @@
         "email-not-found": "No hemos podido encontrar ningún usuario con la dirección de correo electrónico que has introducido. ¿Quizás has escrito mal?"
     },
     "budget_screen": {
-        "button-filter": "Filtro",
-        "label-all-transactions": "Todas las transacciones"
+        "button-filter": "Filtros",
+        "label-all-transactions": "Todas las transacciones",
+        "common": {
+            "label-remaining": "sobrantes",
+            "label-exceeded": "excedidos"
+        }
     },
     "currency": {
         "error": {

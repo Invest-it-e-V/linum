@@ -157,8 +157,12 @@
         "email-not-found": "We konden geen gebruiker vinden met het e-mailadres dat je hebt opgegeven. Misschien heeft u een typefout gemaakt?"
     },
     "budget_screen": {
-        "button-filter": "Filter",
-        "label-all-transactions": "Alle Verrichtingen"
+        "button-filter": "Filters",
+        "label-all-transactions": "Alle Verrichtingen",
+        "common": {
+            "label-remaining": "overgebleven",
+            "label-exceeded": "overschreden"
+        }
     },
     "currency": {
         "error": {
