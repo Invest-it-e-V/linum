@@ -6,7 +6,7 @@ final budgetDummyData = [
   Budget(
     name: "Traveling",
     cap: BudgetCap(
-      value: 0.2,
+      value: 0.1,
       type: CapType.percentage,
     ),
     categories: [
@@ -27,4 +27,16 @@ final budgetDummyData = [
     ],
     start: Jiffy.now().subtract(months: 2).dateTime,
   ),
+  Budget(
+    name: "Essen & Trinken",
+    cap: BudgetCap(
+      value: 0.1,
+      type: CapType.percentage,
+    ),
+    categories: [
+      "lifestyle",
+      "food",
+    ],
+    start: Jiffy.now().subtract(months: 2).dateTime,
+  )
 ];

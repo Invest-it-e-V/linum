@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:linum/common/components/sheets/linum_bottom_sheet.dart';
 import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/core/stats/domain/models/expense_statistic.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
@@ -35,6 +36,7 @@ class SubBudgetTile extends StatefulWidget {
 }
 
 class _SubBudgetTileState extends State<SubBudgetTile> {
+  final MenuController _menuController = MenuController();
   bool isOpen = false;
   double turns = 0.0;
   List<CategoryViewData> categories = [];
@@ -187,12 +189,67 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                categoryService
-                                        .getCategoryByKey(item.name)
-                                        ?.label
-                                        .tr() ??
-                                    item.name,
+                              GestureDetector(
+                                onLongPress: () {
+                                  _menuController.open();
+                                },
+                                child: MenuAnchor(
+                                  controller: _menuController,
+                                  menuChildren: <Widget>[
+                                    MenuItemButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                          "Edit ${categoryService.getCategoryByKey(item.name)?.label.tr() ?? item.name}"),
+                                    ),
+                                    MenuItemButton(
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            return LinumBottomSheet(
+                                                title: 'Edit Categories',
+                                                body: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            categoryService
+                                                                    .getCategoryByKey(
+                                                                        item.name)
+                                                                    ?.label
+                                                                    .tr() ??
+                                                                item.name,
+                                                          ),
+                                                        ]),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        print(
+                                                            "Delete button pressed");
+                                                      },
+                                                      child: Text("Delete"),
+                                                    )
+                                                  ],
+                                                ));
+                                          },
+                                        );
+                                      },
+                                      child: const Text('Edit Categories'),
+                                    ),
+                                  ],
+                                  child: Text(
+                                    categoryService
+                                            .getCategoryByKey(item.name)
+                                            ?.label
+                                            .tr() ??
+                                        item.name,
+                                  ),
+                                ),
                               ),
                               Text(formatter.format(item.expenses.current +
                                   item.expenses.upcoming)),
