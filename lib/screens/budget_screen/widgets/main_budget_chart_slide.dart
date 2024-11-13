@@ -16,6 +16,6 @@ class MainBudgetChartSlide extends StatelessWidget {
       ),
     );
   */
-    return Placeholder();
+    return const Placeholder();
   }
 }

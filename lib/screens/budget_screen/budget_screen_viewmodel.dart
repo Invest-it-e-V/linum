@@ -74,7 +74,7 @@ class BudgetScreenViewModel extends ChangeNotifier {
   }
 
   Future<List<BudgetViewData>> _mapBudgetToViewData(
-      List<Budget> budgets) async {
+      List<Budget> budgets,) async {
     final month = _algService.state.shownMonth;
     final income = await _statService.getSerialIncomeForMonth(month);
 

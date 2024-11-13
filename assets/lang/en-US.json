@@ -157,8 +157,12 @@
         "email-not-found": "We couldn't find a user with the email address you entered. Perhaps you have mistyped?"
     },
     "budget_screen": {
-        "button-filter": "Filter",
-        "label-all-transactions": "All Transactions"
+        "button-filter": "Filters",
+        "label-all-transactions": "All Transactions",
+        "common": {
+            "label-remaining": "remaining",
+            "label-exceeded": "exceeded"
+        }
     },
     "currency": {
         "error": {

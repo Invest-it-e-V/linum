@@ -158,7 +158,11 @@
     },
     "budget_screen": {
         "button-filter": "Filter",
-        "label-all-transactions": "Alle Transaktionen"
+        "label-all-transactions": "Alle Transaktionen",
+        "common": {
+            "label-remaining": "verbleibend",
+            "label-exceeded": "überschritten"
+        }
     },
     "currency": {
         "error": {

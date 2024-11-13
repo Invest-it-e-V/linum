@@ -4,13 +4,23 @@ import 'package:linum/core/budget/domain/models/budget_cap.dart';
 
 final budgetDummyData = [
   Budget(
+    name: "Essen",
+    cap: BudgetCap(
+      value: 200,
+      type: CapType.amount,
+    ),
+    categories: [
+      "food",
+    ],
+    start: Jiffy.now().subtract(months: 2).dateTime,
+  ),
+  Budget(
     name: "Traveling",
     cap: BudgetCap(
       value: 0.1,
       type: CapType.percentage,
     ),
     categories: [
-      "food",
       "freetime",
     ],
     start: Jiffy.now().subtract(months: 2).dateTime,

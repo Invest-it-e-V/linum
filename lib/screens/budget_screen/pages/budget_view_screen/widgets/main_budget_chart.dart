@@ -5,6 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
+import 'package:linum/generated/translation_keys.g.dart';
+import 'package:linum/screens/budget_screen/pages/budget_view_screen/utils/budget_colors.dart';
 import 'package:provider/provider.dart';
 
 class GradientInfo {
@@ -84,7 +86,7 @@ class RadialProgressPainter extends CustomPainter {
   }
 
   ui.Paragraph _buildLabelParagraph(
-      Size size, String content, TextAlign align) {
+      Size size, String content, TextAlign align,) {
     final paragraph = _buildParagraph(size, content, align, labelStyle);
 
     paragraph.layout(ui.ParagraphConstraints(width: size.width / 2));
@@ -143,9 +145,9 @@ class RadialProgressPainter extends CustomPainter {
     }
 
     canvas.drawArc(
-        boundingRect, startAngle, maxSweepAngle, false, backgroundPaint);
+        boundingRect, startAngle, maxSweepAngle, false, backgroundPaint,);
     canvas.drawArc(
-        boundingRect, startAngle, progressSweepAngle, false, progressPaint);
+        boundingRect, startAngle, progressSweepAngle, false, progressPaint,);
     canvas.drawParagraph(
       _buildLabelParagraph(size, labelLeft, TextAlign.start),
       Offset(0, 4 / 5 * diagonal + paragraphMarginTop),
@@ -163,19 +165,19 @@ class RadialProgressPainter extends CustomPainter {
       // TODO: This is not ready set, but will probably be removed anyways
       final r = radius + 6.0;
       final labelSize = _calculateTextSize(progressLabel!, labelStyle,
-          direction: ui.TextDirection.rtl);
+          direction: ui.TextDirection.rtl,);
       canvas.drawParagraph(
         _buildParagraph(size, progressLabel!, TextAlign.end, labelStyle,
-            direction: ui.TextDirection.rtl)
+            direction: ui.TextDirection.rtl,)
           ..layout(ui.ParagraphConstraints(width: labelSize.width)),
         Offset(r + r * cos(progressSweepAngle + startAngle) - labelSize.width,
-            r + r * sin(progressSweepAngle + startAngle) - labelSize.height),
+            r + r * sin(progressSweepAngle + startAngle) - labelSize.height,),
       );
     }
 
     canvas.drawParagraph(
       _buildParagraph(
-          size, centerSub.toUpperCase(), TextAlign.center, centerSubStyle)
+          size, centerSub.toUpperCase(), TextAlign.center, centerSubStyle,)
         ..layout(ui.ParagraphConstraints(width: diagonal)),
       Offset(
         0.0,
@@ -212,6 +214,9 @@ class MainBudgetChart extends StatelessWidget {
           .getStandardCurrency()
           .symbol,
     );
+    final remaining = data.maxBudget - data.currentExpenses;
+    final value = data.currentExpenses /
+        (data.maxBudget == 0 ? 1 : data.maxBudget);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -225,11 +230,9 @@ class MainBudgetChart extends StatelessWidget {
                 progressColor: theme.primaryColor,
                 progressGradientInfo: GradientInfo(
                   colors: [
-                    theme.primaryColor,
-                    Colors.red,
+                    getBudgetProgressColorState(theme, value),
                   ],
                   stops: [
-                    0.8,
                     1.0,
                   ],
                 ),
@@ -240,13 +243,15 @@ class MainBudgetChart extends StatelessWidget {
                 labelLeft: formatter.format(0.0),
                 centerStyle: theme.textTheme.headlineLarge
                     ?.copyWith(color: Colors.black),
-                center: formatter.format(data.maxBudget - data.currentExpenses),
-                centerSub: "Remaining",
+                center: formatter.format(remaining),
+                centerSub: remaining < 0
+                    ? tr(translationKeys.budgetScreen.common.labelExceeded)
+                    : tr(translationKeys.budgetScreen.common.labelRemaining),
                 centerSubStyle:
                     theme.textTheme.labelMedium?.copyWith(color: Colors.black),
               ),
               size: Size(
-                  constraints.maxWidth * 2 / 3, constraints.maxWidth * 2 / 3),
+                  constraints.maxWidth * 2 / 3, constraints.maxWidth * 2 / 3,),
             ),
           ),
         );

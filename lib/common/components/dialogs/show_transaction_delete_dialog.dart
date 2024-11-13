@@ -14,19 +14,19 @@ void showTransactionDeleteDialog(
   showActionDialog(
     context,
     message: isSerialTransaction
-        ? tr(translationKeys.alertdialog.removeTransaction.dialogMessageSerial)
-        : tr(translationKeys.alertdialog.removeTransaction.dialogMessage),
-    title: tr(translationKeys.alertdialog.removeTransaction.dialogLabelTitle),
+        ? tr(translationKeys.alertdialog.deleteTransaction.dialogMessageSerial)
+        : tr(translationKeys.alertdialog.deleteTransaction.dialogMessage),
+    title: tr(translationKeys.alertdialog.deleteTransaction.dialogLabelTitle),
     userMustDismissWithButton: false,
     actions: <DialogAction>[
       DialogAction(
         actionTitle: tr(
-          translationKeys.alertdialog.removeTransaction.dialogButtonCancel,
+          translationKeys.alertdialog.deleteTransaction.dialogButtonCancel,
         ),
       ),
       DialogAction(
         actionTitle: tr(
-          translationKeys.alertdialog.removeTransaction.dialogButtonDelete,
+          translationKeys.alertdialog.deleteTransaction.dialogButtonDelete,
         ),
         callback: callbackFunction,
         dialogPurpose: DialogPurpose.danger,

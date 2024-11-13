@@ -5,6 +5,8 @@ import 'package:linum/core/categories/core/presentation/category_service.dart';
 import 'package:linum/core/stats/domain/models/expense_statistic.dart';
 import 'package:linum/features/currencies/core/utils/currency_formatter.dart';
 import 'package:linum/features/currencies/settings/presentation/currency_settings_service.dart';
+import 'package:linum/generated/translation_keys.g.dart';
+import 'package:linum/screens/budget_screen/pages/budget_view_screen/utils/budget_colors.dart';
 import 'package:provider/provider.dart';
 
 typedef CategoryViewData = ({String name, ExpenseStatistics expenses});
@@ -81,28 +83,19 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
     final value = -widget.budgetData.totalExpenses /
         (widget.budgetData.cap == 0 ? 1 : widget.budgetData.cap);
 
-    var color = theme.colorScheme.primary;
+
     Color? colorExpenses;
     String statusExpenses;
 
-    if (value >= 1) {
-      color = theme.colorScheme.error;
-    } else if (value >= 0.75) {
-      color = Colors.orange;
-    } else if (value >= 0.5) {
-      color = Colors.yellow;
-    }
-
     if (-widget.budgetData.totalExpenses == 0) {
-      print(widget.budgetData.totalExpenses);
       colorExpenses = theme.colorScheme.secondary;
-      statusExpenses = 'remaining';
+      statusExpenses = tr(translationKeys.budgetScreen.common.labelRemaining);
     } else if (-widget.budgetData.totalExpenses >= categoryCap) {
       colorExpenses = theme.colorScheme.error;
-      statusExpenses = 'exceeded';
+      statusExpenses = tr(translationKeys.budgetScreen.common.labelExceeded);
     } else {
-      colorExpenses = theme.colorScheme.primary;
-      statusExpenses = 'remaining';
+      colorExpenses = getBudgetTextColorState(theme, value);
+      statusExpenses = tr(translationKeys.budgetScreen.common.labelRemaining);
     }
 
     return Card.outlined(
@@ -158,7 +151,7 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
               padding: const EdgeInsets.only(top: 12.0, bottom: 4.0),
               child: LinearProgressIndicator(
                 backgroundColor: Colors.black12,
-                color: color,
+                color: getBudgetProgressColorState(theme, value),
                 value: value,
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               ),
@@ -251,8 +244,10 @@ class _SubBudgetTileState extends State<SubBudgetTile> {
                                   ),
                                 ),
                               ),
-                              Text(formatter.format(item.expenses.current +
-                                  item.expenses.upcoming)),
+                              Text(formatter.format(
+                                  item.expenses.current +
+                                  item.expenses.upcoming,
+                              ),),
                             ],
                           ),
                         );

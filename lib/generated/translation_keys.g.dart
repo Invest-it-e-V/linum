@@ -125,7 +125,7 @@ const translationKeys = (
           'alertdialog.update-email.message', // Deine E-Mail-Adresse wurde aktualisiert.
       title: 'alertdialog.update-email.title' // Fertig!
     ),
-    removeTransaction: (
+    deleteTransaction: (
       dialogButtonCancel:
           'alertdialog.delete-transaction.dialog-button-cancel', // Abbrechen
       dialogButtonDelete:
@@ -241,7 +241,11 @@ const translationKeys = (
   budgetScreen: (
     buttonFilter: 'budget_screen.button-filter', // Filter
     labelAllTransactions:
-        'budget_screen.label-all-transactions' // Alle Transaktionen
+        'budget_screen.label-all-transactions', // Alle Transaktionen
+    common: (
+      labelRemaining: 'budget_screen.common.label-remaining', // verbleibend
+      labelExceeded: 'budget_screen.common.label-exceeded' // überschritten
+    )
   ),
   currency: (
     error: (
